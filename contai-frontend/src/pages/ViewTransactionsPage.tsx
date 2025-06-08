@@ -43,22 +43,71 @@ const ViewTransactionsPage: React.FC<ViewTransactionsPageProps> = ({
     });
   };
 
-  const calculateSummary = (transactions: Transaction[]): MonthSummary => {
-    const filteredTransactions = filterTransactions(transactions);
+  const calculateSummary = (
+    transactionsToCalculate: Transaction[]
+  ): MonthSummary => {
+    // Debug: verificar estrutura dos dados
+    console.log("Calculating summary for:", transactionsToCalculate);
 
-    const credits = filteredTransactions
-      .filter((t) => t.type === "credit")
-      .reduce((sum, t) => sum + t.value, 0);
+    // Garantir que os valores sejam números válidos
+    const credits = transactionsToCalculate
+      .filter((t) => {
+        console.log(
+          "Credit transaction:",
+          t,
+          "type:",
+          t.type,
+          "value:",
+          t.value,
+          "typeof value:",
+          typeof t.value
+        );
+        return t.type === "credit";
+      })
+      .reduce((sum, t) => {
+        const value =
+          typeof t.value === "string"
+            ? parseFloat(t.value)
+            : typeof t.value === "number" && !isNaN(t.value)
+            ? t.value
+            : 0;
+        console.log("Adding credit value:", value, "to sum:", sum);
+        return sum + value;
+      }, 0);
 
-    const debits = filteredTransactions
-      .filter((t) => t.type === "debit")
-      .reduce((sum, t) => sum + t.value, 0);
+    const debits = transactionsToCalculate
+      .filter((t) => {
+        console.log(
+          "Debit transaction:",
+          t,
+          "type:",
+          t.type,
+          "value:",
+          t.value,
+          "typeof value:",
+          typeof t.value
+        );
+        return t.type === "debit";
+      })
+      .reduce((sum, t) => {
+        const value =
+          typeof t.value === "string"
+            ? parseFloat(t.value)
+            : typeof t.value === "number" && !isNaN(t.value)
+            ? t.value
+            : 0;
+        console.log("Adding debit value:", value, "to sum:", sum);
+        return sum + value;
+      }, 0);
 
-    return {
-      credits,
-      debits,
-      balance: credits - debits,
+    const result = {
+      credits: isNaN(credits) ? 0 : credits,
+      debits: isNaN(debits) ? 0 : debits,
+      balance: isNaN(credits - debits) ? 0 : credits - debits,
     };
+
+    console.log("Final summary result:", result);
+    return result;
   };
 
   const handleFilterChange = (newFilter: FilterState) => {
@@ -78,7 +127,16 @@ const ViewTransactionsPage: React.FC<ViewTransactionsPageProps> = ({
 
     setLoading(true);
     try {
-      await updateTransaction(editingTransaction.id, updatedData);
+      // Garantir que o valor seja um número
+      const dataToUpdate = {
+        ...updatedData,
+        value:
+          typeof updatedData.value === "string"
+            ? parseFloat(updatedData.value)
+            : updatedData.value,
+      };
+
+      await updateTransaction(editingTransaction.id, dataToUpdate);
       await refreshTransactions();
       setEditingTransaction(null);
     } catch (error) {
@@ -101,7 +159,13 @@ const ViewTransactionsPage: React.FC<ViewTransactionsPageProps> = ({
   };
 
   const filteredTransactions = filterTransactions(transactions);
-  const summary = calculateSummary(transactions);
+  const summary = calculateSummary(filteredTransactions); // Passar as transações já filtradas
+
+  // Debug: log para verificar os dados
+  console.log("All Transactions:", transactions);
+  console.log("Filtered Transactions:", filteredTransactions);
+  console.log("Sample transaction:", filteredTransactions[0]);
+  console.log("Summary:", summary);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
