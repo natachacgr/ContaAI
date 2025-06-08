@@ -8,6 +8,7 @@ import ViewTransactionsPage from "./pages/ViewTransactionsPage";
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState("home");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
 
   const loadTransactions = async () => {
