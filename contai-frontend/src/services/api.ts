@@ -1,7 +1,8 @@
 import axios from "axios";
 import type { Transaction } from "../types/Transaction";
 
-const API_BASE_URL = "http://localhost:3001/api/accounting-entries";
+const API_BASE_URL =
+  "https://contaai-backend.onrender.com/api/accounting-entries";
 
 export const fetchTransactions = async (): Promise<Transaction[]> => {
   const response = await axios.get(API_BASE_URL);
