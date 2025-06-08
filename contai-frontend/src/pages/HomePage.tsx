@@ -11,7 +11,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       <div className="max-w-4xl w-full">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-800 mb-4">
-            Conta<span className="text-blue-600">AI</span>
+            Cont<span className="text-blue-600">AI</span>
           </h1>
           <p className="text-xl text-gray-600">
             Sistema Inteligente de Contabilidade
