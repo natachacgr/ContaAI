@@ -12,7 +12,7 @@ app.use(
     origin: [
       "http://localhost:5174",
       "http://localhost:5173",
-      // Adicione seu domínio de produção do frontend aqui se tiver
+      "https://contaai-peach.vercel.app/",
       process.env.FRONTEND_URL || "*",
     ],
     credentials: true,
