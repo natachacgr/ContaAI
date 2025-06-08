@@ -4,7 +4,7 @@
 
 Uma solução tecnológica moderna para otimizar o processo de registro e visualização de lançamentos contábeis empresariais.
 
-[![Frontend Deploy](https://img.shields.io/badge/Frontend-Vercel-black?style=flat-square&logo=vercel)](https://contaai-peach.vercel.app)
+[![Frontend Deploy](https://img.shields.io/badge/Frontend-Vercel-black?style=flat-square&logo=vercel)](https://conta-ai.vercel.app/)
 [![Backend Deploy](https://img.shields.io/badge/Backend-Render-green?style=flat-square&logo=render)](https://contaai-backend.onrender.com)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](#)
 
@@ -12,7 +12,7 @@ Uma solução tecnológica moderna para otimizar o processo de registro e visual
 
 ## 📋 Sobre o Projeto
 
-O **ContaAí** é uma plataforma web desenvolvida para  uma gestão financeira mais eficiente e organizada. O sistema permite o cadastro, visualização, edição e exclusão de lançamentos contábeis de forma intuitiva e responsiva.
+O **ContAI** é uma plataforma web desenvolvida para  uma gestão financeira mais eficiente e organizada. O sistema permite o cadastro, visualização, edição e exclusão de lançamentos contábeis de forma intuitiva e responsiva.
 
 ### 🎯 Objetivos
 
@@ -42,7 +42,7 @@ O **ContaAí** é uma plataforma web desenvolvida para  uma gestão financeira m
 ## 🛠️ Tecnologias Utilizadas
 
 ### Frontend
-- **React 18** - Biblioteca JavaScript para interfaces
+- **React** - Biblioteca JavaScript para interfaces
 - **TypeScript** - Superset tipado do JavaScript
 - **Vite** - Build tool moderna e rápida
 - **Tailwind CSS** - Framework CSS utilitário
@@ -181,7 +181,7 @@ docker-compose up -d
 ## 🔗 URLs de Deploy
 
 ### 🌐 Produção
-- **Frontend**: [https://contaai-peach.vercel.app](https://contaai-peach.vercel.app)
+- **Frontend**: [https://conta-ai.vercel.app/](https://conta-ai.vercel.app/)
 - **Backend API**: [https://contaai-backend.onrender.com](https://contaai-backend.onrender.com)
 
 ### 🧪 Desenvolvimento
