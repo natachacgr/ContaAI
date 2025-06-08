@@ -109,16 +109,6 @@ export class TransactionValidator {
         ],
       });
     }
-
-    // Validar formato da data se fornecida
-    if (data.date && !this.isValidDateFormat(data.date)) {
-      errors.push({
-        field: "date",
-        value: data.date,
-        messages: ["Date must be in YYYY-MM-DD format"],
-      });
-    }
-
     return {
       valid: errors.length === 0,
       errors: errors.length > 0 ? errors : undefined,
