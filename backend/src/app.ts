@@ -6,22 +6,44 @@ import transactionRoutes from "./routes/transaction.routes";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middlewares
+// Middlewares - CORS CORRIGIDO
 app.use(
   cors({
     origin: [
       "http://localhost:5174",
       "http://localhost:5173",
-      "https://contaai-peach.vercel.app/",
+      "https://contaai-peach.vercel.app", // REMOVIDA A BARRA EXTRA
+      "https://vercel.app", // Para subdominios do Vercel
       process.env.FRONTEND_URL || "*",
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    optionsSuccessStatus: 200, // Para alguns browsers legados
   })
 );
+
+// IMPORTANTE: Middleware para headers adicionais
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
+  );
+
+  // Responde a requisições OPTIONS (preflight)
+  if (req.method === "OPTIONS") {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ADICIONE ESTA ROTA RAIZ - RESOLVE O "Cannot GET /"
+// Rota raiz
 app.get("/", (req, res) => {
   res.json({
     message: "Contaai Backend API",
@@ -47,16 +69,14 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Inicialização do servidor
+// Resto do código permanece igual...
 const startServer = async () => {
   try {
-    // Inicializar conexão com banco de dados
     await AppDataSource.initialize();
     console.log("Database connected successfully");
     console.log("Database host:", process.env.DB_HOST);
     console.log("Database name:", process.env.DB_NAME);
 
-    // Iniciar servidor
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
       console.log(`Root URL: http://localhost:${PORT}/`);
@@ -72,7 +92,6 @@ const startServer = async () => {
     console.error("Port:", process.env.DB_PORT);
     console.error("Database:", process.env.DB_NAME);
     console.error("Username:", process.env.DB_USERNAME);
-    // NÃO loggar a senha por segurança
     process.exit(1);
   }
 };
