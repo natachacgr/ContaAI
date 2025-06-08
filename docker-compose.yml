@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: contaai-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 201970@oN
+      POSTGRES_DB: contaAI
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - contaai-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: contaai-backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=201970@oN
+      - DB_NAME=contaAI
+      - PORT=3001
+    networks:
+      - contaai-network
+
+volumes:
+  postgres_data:
+
+networks:
+  contaai-network:
