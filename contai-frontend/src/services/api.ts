@@ -75,10 +75,15 @@ export const testConnection = async (): Promise<boolean> => {
 export const wakeUpBackend = async (): Promise<void> => {
   try {
     console.log("🔄 Acordando backend...");
-    await api.get("/");
-    console.log("✅ Backend acordado");
+    await api.get("/health");
+    console.log("✅ Backend acordado via /health");
   } catch (error) {
-    console.warn("⚠️ Erro ao acordar backend:", error);
+    try {
+      await api.get("/");
+      console.log("✅ Backend acordado via /");
+    } catch (secondError) {
+      console.warn("⚠️ Erro ao acordar backend:", error);
+    }
   }
 };
 

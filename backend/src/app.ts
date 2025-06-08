@@ -6,13 +6,13 @@ import transactionRoutes from "./routes/transaction.routes";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// CONFIGURAÇÃO CORS DEFINITIVA PARA RENDER
 app.use((req, res, next) => {
   // Lista de origens permitidas
   const allowedOrigins = [
     "http://localhost:5173",
     "http://localhost:5174",
     "https://contaai-peach.vercel.app",
+    "https://conta-ai.vercel.app",
     "https://vercel.app",
   ];
 
@@ -52,6 +52,7 @@ app.use(
         "http://localhost:5173",
         "http://localhost:5174",
         "https://contaai-peach.vercel.app",
+        "https://conta-ai.vercel.app",
       ];
 
       // Permite requisições sem origin (mobile apps, etc) ou origins permitidas
@@ -97,7 +98,6 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Resto do código permanece igual...
 const startServer = async () => {
   try {
     await AppDataSource.initialize();
