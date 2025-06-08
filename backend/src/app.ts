@@ -6,39 +6,67 @@ import transactionRoutes from "./routes/transaction.routes";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middlewares - CORS CORRIGIDO
+// CONFIGURAÇÃO CORS DEFINITIVA PARA RENDER
+app.use((req, res, next) => {
+  // Lista de origens permitidas
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://contaai-peach.vercel.app",
+    "https://vercel.app",
+  ];
+
+  const origin = req.headers.origin;
+
+  // Se a origem está na lista ou é undefined (requisições do mesmo domínio)
+  if (!origin || allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "*");
+  }
+
+  // Headers CORS essenciais
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, X-Requested-With"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "86400"); // Cache preflight por 24h
+
+  // Resposta para preflight OPTIONS
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
+  next();
+});
+
+// CORS middleware como backup (mas o manual acima é mais confiável no Render)
 app.use(
   cors({
-    origin: [
-      "http://localhost:5174",
-      "http://localhost:5173",
-      "https://contaai-peach.vercel.app", // REMOVIDA A BARRA EXTRA
-      "https://vercel.app", // Para subdominios do Vercel
-      process.env.FRONTEND_URL || "*",
-    ],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://contaai-peach.vercel.app",
+      ];
+
+      // Permite requisições sem origin (mobile apps, etc) ou origins permitidas
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Não permitido pelo CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-    optionsSuccessStatus: 200, // Para alguns browsers legados
+    optionsSuccessStatus: 200,
   })
 );
-
-// IMPORTANTE: Middleware para headers adicionais
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With"
-  );
-
-  // Responde a requisições OPTIONS (preflight)
-  if (req.method === "OPTIONS") {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
