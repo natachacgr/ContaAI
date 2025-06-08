@@ -6,7 +6,6 @@ Uma solução tecnológica moderna para otimizar o processo de registro e visual
 
 [![Frontend Deploy](https://img.shields.io/badge/Frontend-Vercel-black?style=flat-square&logo=vercel)](https://conta-ai.vercel.app/)
 [![Backend Deploy](https://img.shields.io/badge/Backend-Render-green?style=flat-square&logo=render)](https://contaai-backend.onrender.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](#)
 
 </div>
 
