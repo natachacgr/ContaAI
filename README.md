@@ -157,15 +157,16 @@ docker-compose up -d
 - A interface principal será carregada automaticamente
 
 ### 2. **Cadastrar Lançamentos**
-- Clique no botão "Novo Lançamento"
+- Clique no botão "Cadastrar Lançamento"
 - Preencha os campos obrigatórios:
   - **Descrição**: Descrição do lançamento
   - **Valor**: Valor da transação
   - **Tipo**: Crédito ou Débito
   - **Data**: Data do lançamento
 - Clique em "Salvar"
+- Clique em Voltar ao inicio
 
-### 3. **Visualizar Dashboard**
+### 3. **Visualizar Lançamentos**
 - Use os filtros de mês e ano para visualizar períodos específicos
 - O dashboard mostrará:
   - Total de créditos
