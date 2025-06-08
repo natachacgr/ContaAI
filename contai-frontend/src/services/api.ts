@@ -169,5 +169,4 @@ export const deleteTransaction = async (id: number) => {
   }
 };
 
-// Exportar a instância do axios para uso direto se necessário
 export { api };
